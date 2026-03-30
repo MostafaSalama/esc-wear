@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getProductBySlug, products } from '@/lib/products';
+import { locales } from '@/i18n/config';
 import { ImageGallery } from '@/components/product/ImageGallery';
 import { ProductInfo } from '@/components/product/ProductInfo';
 import { ReviewSection } from '@/components/product/ReviewSection';
@@ -10,7 +11,9 @@ type Props = {
 };
 
 export function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return locales.flatMap((locale) =>
+    products.map((p) => ({ locale, slug: p.slug }))
+  );
 }
 
 export default async function ProductPage({ params }: Props) {
